@@ -13,7 +13,6 @@ export default function Home() {
             By CleanCode
         </div>
       </div>
-
     </main>
   );
 }
