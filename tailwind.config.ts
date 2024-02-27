@@ -24,6 +24,7 @@ const config: Config = {
                 280: "280px",
                 900: "900px",
                 458: "458px",
+                "88vh": "88vh",
             },
             top: {
                 " 50%": "50%",
@@ -34,9 +35,6 @@ const config: Config = {
             },
             colors: {
                 primary: "rgb(22, 24, 35)",
-            },
-            height: {
-                "88vh": "88vh",
             },
             backgroundImage: {
                 "blurred-img":
