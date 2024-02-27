@@ -1,9 +1,9 @@
 import { type SchemaTypeDefinition } from 'sanity';
 
-import { PostSchema } from './post';
-import { UserSchema } from './user';
-import { CommentSchema } from './comment';
-import { PostedBySchema } from './postedBy';
+import { PostSchema } from './schemas/post';
+import { UserSchema } from './schemas/user';
+import { CommentSchema } from './schemas/comment';
+import { PostedBySchema } from './schemas/postedBy';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
