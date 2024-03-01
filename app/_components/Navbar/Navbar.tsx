@@ -14,7 +14,7 @@ import useAuthStore from "@/app/_store/authStore";
 import { IUser } from "@/app/_utils/interfaces";
 
 const Navbar = () => {
-    const { userProfile, addUser } = useAuthStore();
+    const { userProfile, addUser, removeUser } = useAuthStore();
     const [user, setUser] = useState<IUser | null>();
 
     useEffect(() => {
@@ -58,6 +58,17 @@ const Navbar = () => {
                                 </div>
                             </Link>
                         )}
+
+                        <button
+                            type="button"
+                            className=" border-2 p-2 rounded-full cursor-pointer outline-none shadow-md"
+                            onClick={() => {
+                                googleLogout();
+                                removeUser();
+                            }}
+                        >
+                            <AiOutlineLogout color="red" fontSize={21} />
+                        </button>
                     </div>
                 ) : (
                     <GoogleLogin
