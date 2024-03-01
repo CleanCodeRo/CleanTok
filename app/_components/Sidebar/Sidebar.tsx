@@ -10,7 +10,6 @@ import Footer from "../Footer/Footer";
 
 const Sidebar = () => {
     const [showSidebar, setShowSidebar] = useState(true);
-    const [userProfile, setUserProfile] = useState(false);
 
     const handleSidebarDisplay = () => {
         setShowSidebar((prev) => !prev);
