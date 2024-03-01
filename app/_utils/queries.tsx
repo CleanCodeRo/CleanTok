@@ -12,7 +12,7 @@ export const allPostsQuery = () => {
         postedBy->{
           _id,
           userName,
-          image
+          profileImage
         },
       likes,
       comments[]{
@@ -21,7 +21,7 @@ export const allPostsQuery = () => {
         postedBy->{
         _id,
         userName,
-        image
+        profileImage
       },
       }
     }`;
