@@ -9,6 +9,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import Logo from "../../ui/images/clean-tok-logo.png";
+import { createOrGetUser } from "@/app/_utils/api";
 
 const Navbar = () => {
     const [user, setUser] = useState(false);
@@ -33,7 +34,7 @@ const Navbar = () => {
                     <div className="flex gap-5 md:gap-10">Logged In</div>
                 ) : (
                     <GoogleLogin
-                        onSuccess={(response) => console.log(response)}
+                        onSuccess={(response) => createOrGetUser(response)}
                         onError={() => console.log("Login Failed")}
                     />
                 )}
