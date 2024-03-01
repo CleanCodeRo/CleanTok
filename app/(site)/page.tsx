@@ -18,7 +18,7 @@ const HomePage = () => {
             setIsLoading(false);
         };
         getVideosInit();
-    }, [videos]);
+    }, []);
 
     return (
         <div className="flex flex-col gap-10 videos h-full">

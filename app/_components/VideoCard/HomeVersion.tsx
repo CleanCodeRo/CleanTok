@@ -14,9 +14,6 @@ const HomeVersion = ({ post }: IProps) => {
     const { caption, postedBy, video, _id, likes } = post;
     const [isHover, setIsHover] = useState(false);
 
-    console.log(postedBy);
-
-
     const [playing, setPlaying] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);

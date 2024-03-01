@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { apiDomain } from "@/app/_utils/env";
 
 export const apiBaseURL = `${apiDomain}/api`;
@@ -25,4 +26,20 @@ export const fetchData = async <T,>(endpoint: string): Promise<T | any> => {
 export const getPosts = async () => {
     const apiString = `${apiBaseURL}/posts`;
     return fetchData(apiString);
+};
+
+export const createOrGetUser = async (response: any, addUser: any) => {
+    const decoded: { name: string; picture: string; sub: string } = jwtDecode(response.credential);
+    const { name, picture, sub } = decoded;
+
+    const user = {
+        _id: sub,
+        _type: "user",
+        userName: name,
+        profileImage: picture,
+    };
+
+    addUser(user);
+
+    await axios.post(`${apiBaseURL}/auth`, user);
 };
