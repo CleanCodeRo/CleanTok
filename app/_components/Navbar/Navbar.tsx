@@ -10,9 +10,10 @@ import { BiSearch } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import Logo from "../../ui/images/clean-tok-logo.png";
 import { createOrGetUser } from "@/app/_utils/api";
+import useAuthStore from "@/app/_store/authStore";
 
 const Navbar = () => {
-    const [user, setUser] = useState(false);
+    const { userProfile, addUser } = useAuthStore();
 
     return (
         <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
@@ -30,11 +31,11 @@ const Navbar = () => {
             <div>Search...</div>
 
             <div>
-                {user ? (
-                    <div className="flex gap-5 md:gap-10">Logged In</div>
+                {userProfile ? (
+                    <div className="flex gap-5 md:gap-10">{userProfile.userName}</div>
                 ) : (
                     <GoogleLogin
-                        onSuccess={(response) => createOrGetUser(response)}
+                        onSuccess={(response) => createOrGetUser(response, addUser)}
                         onError={() => console.log("Login Failed")}
                     />
                 )}

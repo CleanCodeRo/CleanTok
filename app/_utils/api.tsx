@@ -28,7 +28,7 @@ export const getPosts = async () => {
     return fetchData(apiString);
 };
 
-export const createOrGetUser = async (response: any) => {
+export const createOrGetUser = async (response: any, addUser: any) => {
     const decoded: { name: string; picture: string; sub: string } = jwtDecode(response.credential);
     const { name, picture, sub } = decoded;
 
@@ -38,6 +38,8 @@ export const createOrGetUser = async (response: any) => {
         userName: name,
         profileImage: picture,
     };
+
+    addUser(user);
 
     await axios.post(`${apiBaseURL}/auth`, user);
 };
