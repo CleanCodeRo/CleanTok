@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -11,9 +11,15 @@ import { IoMdAdd } from "react-icons/io";
 import Logo from "../../ui/images/clean-tok-logo.png";
 import { createOrGetUser } from "@/app/_utils/api";
 import useAuthStore from "@/app/_store/authStore";
+import { IUser } from "@/app/_utils/interfaces";
 
 const Navbar = () => {
     const { userProfile, addUser } = useAuthStore();
+    const [user, setUser] = useState<IUser | null>();
+
+    useEffect(() => {
+        setUser(userProfile);
+    }, [userProfile]);
 
     return (
         <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
@@ -39,7 +45,19 @@ const Navbar = () => {
                             </button>
                         </Link>
 
-                        {userProfile.userName}
+                        {user?.profileImage && (
+                            <Link href={`/user/${user?._id}`}>
+                                <div>
+                                    <Image
+                                        className="rounded-full cursor-pointer"
+                                        src={user?.profileImage}
+                                        alt="user"
+                                        width={40}
+                                        height={40}
+                                    />
+                                </div>
+                            </Link>
+                        )}
                     </div>
                 ) : (
                     <GoogleLogin
