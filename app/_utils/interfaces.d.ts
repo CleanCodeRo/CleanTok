@@ -1,4 +1,4 @@
-export type Video = {
+export interface Video {
     _id: string;
     caption: string;
     video: {
