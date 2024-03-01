@@ -25,7 +25,7 @@ const HomePage = () => {
             {isLoading ? (
                 <Spinner />
             ) : videos?.length ? (
-                videos?.map((video: Video) => <VideoCard key={video._id} post={video} />)
+                videos?.map((video: Video) => <VideoCard key={video._id} post={video} isShowingOnHome />)
             ) : (
                 <NoResults text={`No Videos`} />
             )}
