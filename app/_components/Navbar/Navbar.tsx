@@ -13,7 +13,12 @@ const Navbar = () => {
         <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
             <Link href="/">
                 <div className="w-[100px] md:w-[130px]">
-                    <Image className="cursor-pointer" src={Logo} alt="CleanTok" layout="responsive" />
+                    <Image
+                        className="cursor-pointer w-[100px] md:w-[130px]"
+                        src={Logo}
+                        alt="CleanTok"
+                        priority={true}
+                    />
                 </div>
             </Link>
         </div>
