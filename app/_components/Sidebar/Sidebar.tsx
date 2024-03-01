@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -77,7 +77,10 @@ const Sidebar = () => {
                         </div>
                     )}
 
-                    <Discover />
+                    <Suspense>
+                        <Discover />
+                    </Suspense>
+
                     <SuggestedAccounts />
                     <Footer />
                 </div>
