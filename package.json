@@ -19,6 +19,7 @@
     "react-dom": "^18",
     "react-google-login": "^5.2.2",
     "react-icons": "^4.3.1",
+    "react-spinners": "^0.13.8",
     "sanity": "^3.30.0",
     "sharp": "^0.33.2",
     "styled-components": "^6.1.8",
