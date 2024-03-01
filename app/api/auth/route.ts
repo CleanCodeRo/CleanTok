@@ -8,7 +8,6 @@ export const POST = async (request: Request, response: Response) => {
 
         return Response.json("Login successful");
     } catch (error: any) {
-        console.log("Unexpected error: ", error);
-        return "An unexpected error has occurred.";
+        return Response.json(`Unexpected error: ${error}`);
     }
 };
