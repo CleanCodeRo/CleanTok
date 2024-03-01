@@ -4,8 +4,8 @@
     @include color_schemes.light-color-scheme;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        @include color_schemes.dark-color-scheme;
-    }
-}
+// @media (prefers-color-scheme: dark) {
+//     :root {
+//         @include color_schemes.dark-color-scheme;
+//     }
+// }
