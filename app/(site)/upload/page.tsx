@@ -2,17 +2,24 @@
 
 import React, { useState } from "react";
 import { SanityAssetDocument } from "@sanity/client";
+import { AiOutlineLoading } from "react-icons/ai";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { MdError  } from "react-icons/md";
+import { MdError } from "react-icons/md";
 
 import { client } from "@/sanity/lib/client";
+import { topics } from "@/app/_utils/constants";
 
 interface IProps {}
 
 const PostUpload = (props: IProps) => {
     const [isLoading, setIsLoading] = useState<Boolean>(false);
-    const [videoAsset, setVideoAsset] = useState<SanityAssetDocument | undefined>();
+    const [savingPost, setSavingPost] = useState<Boolean>(false);
     const [wrongFileType, setWrongFileType] = useState<Boolean>(false);
+
+    const [videoAsset, setVideoAsset] = useState<SanityAssetDocument | undefined>();
+
+    const [caption, setCaption] = useState("");
+    const [topic, setTopic] = useState<String>(topics[0].name);
 
     const uploadVideo = async (event: any) => {
         const selectedFile = event.target.files[0];
@@ -39,9 +46,20 @@ const PostUpload = (props: IProps) => {
         }
     };
 
+    const handlePost = () => {
+        alert(`Caption: ${caption}, Topic: ${topic}, VideoAsset: ${videoAsset}`);
+    };
+
+    const handleDiscard = () => {
+        setSavingPost(false);
+        setVideoAsset(undefined);
+        setCaption("");
+        setTopic("");
+    };
+
     return (
-        <div className="flex w-full h-full">
-            <div className="bg-white rounded-lg w-full">
+        <div className="flex w-full h-full mb-5 bg-[#F8F8F8] justify-center">
+            <div className="bg-white rounded-lg xl:h-[80vh] flex gap-6 flex-wrap justify-center items-center p-6">
                 <div>
                     <div>
                         <p className="text-2xl font-bold">Upload Video</p>
@@ -59,7 +77,10 @@ const PostUpload = (props: IProps) => {
                                 </div>
                                 <div>
                                     <p className="font-bold">The file could not be uploaded</p>
-                                    <p className="text-sm">Only files with the following extensions are allowed: <span className="italic">mp4 webm ogg</span></p>
+                                    <p className="text-sm">
+                                        Only files with the following extensions are allowed:{" "}
+                                        <span className="italic">mp4 webm ogg</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +88,11 @@ const PostUpload = (props: IProps) => {
 
                     <div className="group border-dashed rounded-xl border-4 border-gray-300 hover:border-[#004AAD] flex flex-col justify-center items-center outline-none mt-10 w-[260px] h-[458px] p-10 cursor-pointer hover:bg-gray-100">
                         {isLoading ? (
-                            <p className="text-center text-3xl text-[#004AAD] font-semibold">Uploading...</p>
+                            <>
+                                <AiOutlineLoading className="text-3xl loading-icon text-[#004AAD]" />
+                                <br />
+                                <p className="text-center text-3xl text-[#004AAD] font-semibold">Uploading...</p>
+                            </>
                         ) : (
                             <div>
                                 {videoAsset ? (
@@ -113,6 +138,53 @@ const PostUpload = (props: IProps) => {
                                 )}
                             </div>
                         )}
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-3 pb-10">
+                    <label className="text-md font-medium ">Caption</label>
+                    <input
+                        type="text"
+                        value={caption}
+                        onChange={(event) => setCaption(event.target.value)}
+                        className="rounded outline-none text-md border-2 border-gray-200 p-2"
+                    />
+
+                    <label className="text-md font-medium ">Topic</label>
+                    <select
+                        onChange={(event) => {
+                            setTopic(event.target.value);
+                        }}
+                        className="outline-none border-2 border-gray-200 text-md capitalize lg:p-4 p-2 rounded cursor-pointer"
+                    >
+                        {topics.map((item) => (
+                            <option
+                                key={item.name}
+                                className=" outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300"
+                                value={item.name}
+                            >
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    <div className="flex gap-6 mt-10">
+                        <button
+                            onClick={handleDiscard}
+                            type="button"
+                            className="border-red-300 hover:border-red-400 border-2 text-md font-medium p-2 rounded w-28 outline-none"
+                        >
+                            Discard
+                        </button>
+
+                        <button
+                            disabled={videoAsset?.url ? false : true}
+                            onClick={handlePost}
+                            type="button"
+                            className="bg-gray-300 enabled:hover:bg-blue-700 enabled:bg-blue-800 text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+                        >
+                            {savingPost ? "Posting..." : "Post"}
+                        </button>
                     </div>
                 </div>
             </div>
