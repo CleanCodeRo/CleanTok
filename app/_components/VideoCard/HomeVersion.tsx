@@ -66,7 +66,7 @@ const HomeVersion = ({ post }: IProps) => {
                                 </p>
                             </div>
                         </Link>
-                        <Link href={`/detail/${_id}`}>
+                        <Link href={`/posts/${_id}`}>
                             <p className="mt-2 font-normal ">{caption}</p>
                         </Link>
                     </div>
@@ -79,7 +79,7 @@ const HomeVersion = ({ post }: IProps) => {
                     onMouseLeave={() => setIsHover(false)}
                     className="rounded-3xl"
                 >
-                    <Link href={`/detail/${_id}`}>
+                    <Link href={`/posts/${_id}`}>
                         <video
                             loop
                             ref={videoRef}

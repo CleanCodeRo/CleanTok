@@ -12,7 +12,7 @@ const DefaultVersion = ({ post }: IProps) => {
 
     return (
         <div>
-            <Link href={`/detail/${_id}`}>
+            <Link href={`/posts/${_id}`}>
                 <video loop src={video.asset.url} className="w-[250px] md:w-full rounded-xl cursor-pointer"></video>
             </Link>
 
@@ -23,7 +23,7 @@ const DefaultVersion = ({ post }: IProps) => {
                 </p>
             </div>
 
-            <Link href={`/detail/${_id}`}>
+            <Link href={`/posts/${_id}`}>
                 <p className="mt-5 text-md text-gray-800 cursor-pointer w-210">{caption}</p>
             </Link>
         </div>
