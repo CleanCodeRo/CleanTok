@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
 import { GoVerified } from "react-icons/go";
 import { Video } from "@/app/_utils/interfaces";
 import PlayPauseButton from "@/app/_components/VideoCard/PlayPauseButton";
+import MuteUnmuteVideoSwitcher from "@/app/_components/VideoCard/MuteUnmuteVideoSwitcher";
 
 interface IProps {
     post: Video;
@@ -14,16 +14,7 @@ const HomeVersion = ({ post }: IProps) => {
     const { caption, postedBy, video, _id, likes } = post;
     const [isHover, setIsHover] = useState(false);
 
-    const [isVideoMuted, setIsVideoMuted] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
-
-
-
-    useEffect(() => {
-        if (videoRef?.current) {
-            videoRef.current.muted = isVideoMuted;
-        }
-    }, [isVideoMuted]);
 
     return (
         <div className="flex flex-col border-b-2 border-gray-200 pb-6">
@@ -87,16 +78,7 @@ const HomeVersion = ({ post }: IProps) => {
                     {isHover && (
                         <div className="absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 flex gap-10 lg:justify-between w-[100px] md:w-[50px] lg:w-[600px] p-3">
                             <PlayPauseButton videoRef={videoRef} />
-
-                            {isVideoMuted ? (
-                                <button onClick={() => setIsVideoMuted(false)}>
-                                    <HiVolumeOff className="text-black text-2xl lg:text-4xl" />
-                                </button>
-                            ) : (
-                                <button onClick={() => setIsVideoMuted(true)}>
-                                    <HiVolumeUp className="text-black text-2xl lg:text-4xl" />
-                                </button>
-                            )}
+                            <MuteUnmuteVideoSwitcher videoRef={videoRef} />
                         </div>
                     )}
                 </div>
