@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { SanityAssetDocument } from "@sanity/client";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import { MdError  } from "react-icons/md";
 
 import { client } from "@/sanity/lib/client";
 
@@ -40,12 +41,29 @@ const PostUpload = (props: IProps) => {
 
     return (
         <div className="flex w-full h-full">
-            <div className=" bg-white rounded-lg">
+            <div className="bg-white rounded-lg w-full">
                 <div>
                     <div>
                         <p className="text-2xl font-bold">Upload Video</p>
                         <p className="text-md text-gray-400 mt-1">Post a video to your account</p>
                     </div>
+
+                    {wrongFileType && (
+                        <div
+                            className="bg-red-100 border-t-4 border-red-500 rounded-b text-teal-900 px-4 py-3 shadow-md mt-4 w-full"
+                            role="alert"
+                        >
+                            <div className="flex">
+                                <div className="py-1">
+                                    <MdError className="fill-current h-6 w-6 text-red-500 mr-4" />
+                                </div>
+                                <div>
+                                    <p className="font-bold">The file could not be uploaded</p>
+                                    <p className="text-sm">Only files with the following extensions are allowed: <span className="italic">mp4 webm ogg</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="group border-dashed rounded-xl border-4 border-gray-300 hover:border-[#004AAD] flex flex-col justify-center items-center outline-none mt-10 w-[260px] h-[458px] p-10 cursor-pointer hover:bg-gray-100">
                         {isLoading ? (
