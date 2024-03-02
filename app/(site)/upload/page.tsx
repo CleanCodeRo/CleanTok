@@ -1,25 +1,45 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { SanityAssetDocument } from "@sanity/client";
 import { AiOutlineLoading } from "react-icons/ai";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdError } from "react-icons/md";
 
+import useAuthStore from "@/app/_store/authStore";
 import { client } from "@/sanity/lib/client";
 import { topics } from "@/app/_utils/constants";
+import { uploadPost } from "@/app/_utils/api";
+import { IUser } from "@/app/_utils/interfaces";
+import Spinner from "@/app/_components/Spinner/Spinner";
 
 interface IProps {}
 
 const PostUpload = (props: IProps) => {
+    const router = useRouter();
+    const { userProfile } = useAuthStore();
+    const [user, setUser] = useState<IUser | null>();
+
     const [isLoading, setIsLoading] = useState<Boolean>(false);
     const [savingPost, setSavingPost] = useState<Boolean>(false);
     const [wrongFileType, setWrongFileType] = useState<Boolean>(false);
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState<Boolean>(false);
 
     const [videoAsset, setVideoAsset] = useState<SanityAssetDocument | undefined>();
 
     const [caption, setCaption] = useState("");
     const [topic, setTopic] = useState<String>(topics[0].name);
+
+    useEffect(() => {
+        if (userProfile === null) {
+            setIsUserLoggedIn(false);
+            router.push("/");
+        } else {
+            setUser(userProfile);
+            setIsUserLoggedIn(true);
+        }
+    }, [userProfile, router]);
 
     const uploadVideo = async (event: any) => {
         const selectedFile = event.target.files[0];
@@ -46,8 +66,32 @@ const PostUpload = (props: IProps) => {
         }
     };
 
-    const handlePost = () => {
-        alert(`Caption: ${caption}, Topic: ${topic}, VideoAsset: ${videoAsset}`);
+    const handlePostUpload = async () => {
+        if (userProfile !== null && caption && videoAsset?._id && topic) {
+            setSavingPost(true);
+
+            const post = {
+                _type: "post",
+                caption,
+                video: {
+                    _type: "file",
+                    asset: {
+                        _type: "reference",
+                        _ref: videoAsset?._id,
+                    },
+                },
+                userId: user?._id,
+                postedBy: {
+                    _type: "postedBy",
+                    _ref: user?._id,
+                },
+                topic,
+            };
+
+            await uploadPost(post);
+
+            router.push("/");
+        }
     };
 
     const handleDiscard = () => {
@@ -57,7 +101,7 @@ const PostUpload = (props: IProps) => {
         setTopic("");
     };
 
-    return (
+    return isUserLoggedIn ? (
         <div className="flex w-full h-full mb-5 bg-[#F8F8F8] justify-center">
             <div className="bg-white rounded-lg xl:h-[80vh] flex gap-6 flex-wrap justify-center items-center p-6">
                 <div>
@@ -179,7 +223,7 @@ const PostUpload = (props: IProps) => {
 
                         <button
                             disabled={videoAsset?.url ? false : true}
-                            onClick={handlePost}
+                            onClick={handlePostUpload}
                             type="button"
                             className="bg-gray-300 enabled:hover:bg-blue-700 enabled:bg-blue-800 text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
                         >
@@ -189,6 +233,8 @@ const PostUpload = (props: IProps) => {
                 </div>
             </div>
         </div>
+    ) : (
+        <Spinner />
     );
 };
 
