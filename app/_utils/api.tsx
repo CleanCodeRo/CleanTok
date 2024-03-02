@@ -43,3 +43,7 @@ export const createOrGetUser = async (response: any, addUser: any) => {
 
     await axios.post(`${apiBaseURL}/auth`, user);
 };
+
+export const uploadPost = async (payload: any) => {
+    await axios.post(`${apiBaseURL}/posts`, payload);
+};

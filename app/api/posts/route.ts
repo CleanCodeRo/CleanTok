@@ -6,3 +6,15 @@ export const GET = async (request: Request) => {
     const data = await client.fetch(query);
     return Response.json(data, { status: 200 });
 };
+
+export const POST = async (request: Request) => {
+    try {
+        const data = await request.json();
+
+        client.create(data);
+
+        return Response.json("Post created successfully");
+    } catch (error: any) {
+        return Response.json(`Unexpected error: ${error}`);
+    }
+};
