@@ -1,25 +1,40 @@
 "use client";
 
 import React, { useState } from "react";
-import { SanityAssetDocument } from '@sanity/client';
+import { SanityAssetDocument } from "@sanity/client";
 import { FaCloudUploadAlt } from "react-icons/fa";
+
+import { client } from "@/sanity/lib/client";
 
 interface IProps {}
 
 const PostUpload = (props: IProps) => {
     const [isLoading, setIsLoading] = useState<Boolean>(false);
     const [videoAsset, setVideoAsset] = useState<SanityAssetDocument | undefined>();
+    const [wrongFileType, setWrongFileType] = useState<Boolean>(false);
 
     const uploadVideo = async (event: any) => {
         const selectedFile = event.target.files[0];
         const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
 
         const isCorrectFileType = fileTypes.includes(selectedFile.type);
-        
+
         if (isCorrectFileType) {
-            console.log("Correct file type");
+            setIsLoading(true);
+            setWrongFileType(false);
+
+            client.assets
+                .upload("file", selectedFile, {
+                    contentType: selectedFile.type,
+                    filename: selectedFile.name,
+                })
+                .then((data) => {
+                    setVideoAsset(data);
+                    setIsLoading(false);
+                });
         } else {
-            console.log("Incorrect file type");
+            setIsLoading(false);
+            setWrongFileType(true);
         }
     };
 
@@ -38,7 +53,14 @@ const PostUpload = (props: IProps) => {
                         ) : (
                             <div>
                                 {videoAsset ? (
-                                    <div></div>
+                                    <div className="rounded-3xl w-[300px] p-4 flex flex-col gap-6 justify-center items-center">
+                                        <video
+                                            className="rounded-xl h-[462px] bg-black"
+                                            controls
+                                            loop
+                                            src={videoAsset?.url}
+                                        />
+                                    </div>
                                 ) : (
                                     <label className="cursor-pointer">
                                         <div className="flex flex-col items-center justify-center h-full">
