@@ -1,9 +1,81 @@
-import React from "react";
+"use client";
+
+import React, { useRef, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+
+import { GoVerified } from "react-icons/go";
+import { MdOutlineCancel } from "react-icons/md";
+
+import { Video } from "@/app/_utils/interfaces";
+import { getPost } from "@/app/_utils/api";
+
+import Spinner from "@/app/_components/Spinner/Spinner";
+import VideoWithControls from "@/app/_components/VideoCard/VideoWithControls";
+import ProfilePicture from "@/app/_components/ProfilePicture/ProfilePicture";
 
 interface IProps {}
 
 const PostDetails = (props: IProps) => {
-    return <div>Post Details</div>;
+    const params = useParams();
+    const router = useRouter();
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const { id } = params;
+
+    const [post, setPost] = useState<Video | null>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const getPostInit = async () => {
+            const result: any = await getPost(id);
+            setPost(result?.data[0]);
+            setIsLoading(false);
+        };
+        getPostInit();
+    }, [id]);
+
+    return isLoading ? (
+        <Spinner />
+    ) : (
+        <div className="relative w-full h-full">
+            <div className="flex w-full h-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
+                <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
+                    <div className="opacity-90 absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
+                        <p className="cursor-pointer " onClick={() => router.back()}>
+                            <MdOutlineCancel className="text-white text-[35px] hover:opacity-90" />
+                        </p>
+                    </div>
+
+                    <VideoWithControls
+                        videoClasses={"cursor-pointer w-full h-full"}
+                        videoRef={videoRef}
+                        videoSource={post?.video?.asset.url}
+                    />
+                </div>
+
+                <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
+                    <div className="lg:mt-20 mt-10">
+                        <Link href={`/user/${post?.postedBy?._id}`}>
+                            <div className="flex gap-4 mb-4 bg-white w-full pl-10 cursor-pointer">
+                                <div className="w-[42px] h-[42px]">
+                                    <ProfilePicture profileImage={post?.postedBy?.profileImage} />
+                                </div>
+
+                                <div className="flex gap-2 items-center justify-center text-xl font-bold lowercase tracking-wider">
+                                    {post?.postedBy?.userName.replace(/\s+/g, "")}{" "}
+                                    <GoVerified className="text-blue-400 text-xl" />
+                                </div>
+                            </div>
+                        </Link>
+
+                        <div className="px-10">
+                            <p className=" text-md text-gray-600">{post?.caption}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default PostDetails;
