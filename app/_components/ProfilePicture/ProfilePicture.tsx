@@ -2,11 +2,11 @@ import Image from "next/image";
 import React from "react";
 
 interface IProps {
-    profileImage: string;
+    profileImage: string | null | undefined;
 }
 
 const ProfilePicture = ({ profileImage }: IProps) => {
-    return profileImage !== null ? (
+    return profileImage ? (
         <Image width={62} height={62} className="rounded-full" src={profileImage} alt="user-profile" />
     ) : (
         <svg
