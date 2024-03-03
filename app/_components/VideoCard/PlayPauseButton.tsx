@@ -2,24 +2,18 @@ import React, { useState } from "react";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 
 interface IProps {
-    videoRef: React.RefObject<HTMLVideoElement>;
+    playing: boolean;
+    onPlayPauseSwitch: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const PlayPauseButton = ({ videoRef }: IProps) => {
-    const [playing, setPlaying] = useState(false);
-
-    const onVideoPress = () => {
-        playing ? videoRef?.current?.pause() : videoRef?.current?.play();
-        setPlaying(playing ? false : true);
-    };
-
+const PlayPauseButton = ({ playing, onPlayPauseSwitch }: IProps) => {
     return playing ? (
-        <button onClick={onVideoPress}>
-            <BsFillPauseFill className="text-black text-2xl lg:text-4xl" />
+        <button onClick={onPlayPauseSwitch}>
+            <BsFillPauseFill className="text-black text-4xl lg:text-8xl" />
         </button>
     ) : (
-        <button onClick={onVideoPress}>
-            <BsFillPlayFill className="text-black text-2xl lg:text-4xl" />
+        <button onClick={onPlayPauseSwitch}>
+            <BsFillPlayFill className="text-black text-4xl lg:text-8xl" />
         </button>
     );
 };
