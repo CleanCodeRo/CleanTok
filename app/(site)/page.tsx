@@ -22,7 +22,7 @@ const HomePage = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="flex flex-col gap-10 videos max-w-[470px] h-full">
+            <div className="flex flex-col gap-10 videos max-w-[470px] h-full w-full break-all">
                 {isLoading ? (
                     <Spinner />
                 ) : videos?.length ? (
