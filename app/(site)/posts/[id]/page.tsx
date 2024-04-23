@@ -11,7 +11,7 @@ import { Video } from "@/app/_utils/interfaces";
 import { getPost } from "@/app/_utils/api";
 
 import Spinner from "@/app/_components/Spinner/Spinner";
-import VideoWithControls from "@/app/_components/VideoCard/VideoWithControls";
+import VideoWithControls from "@/app/_components/VideoWithControls/VideoWithControls";
 import ProfilePicture from "@/app/_components/ProfilePicture/ProfilePicture";
 
 interface IProps {}

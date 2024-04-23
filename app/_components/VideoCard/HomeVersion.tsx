@@ -4,14 +4,14 @@ import { GoVerified } from "react-icons/go";
 import { Video } from "@/app/_utils/interfaces";
 
 import ProfilePicture from "@/app/_components/ProfilePicture/ProfilePicture";
-import VideoWithControls from "@/app/_components/VideoCard/VideoWithControls";
+import VideoWithControls from "@/app/_components/VideoWithControls/VideoWithControls";
 
 interface IProps {
-    post: Video;
+    post: Video | null | undefined;
 }
 
 const HomeVersion = ({ post }: IProps) => {
-    const { caption, postedBy, video, _id, likes } = post;
+    const { caption, postedBy, video, _id, likes } = post!;
     const videoRef = useRef<HTMLVideoElement>(null);
 
     return (
@@ -28,7 +28,8 @@ const HomeVersion = ({ post }: IProps) => {
                         <Link href={`/user/${postedBy?._id}`}>
                             <div className="flex items-center gap-2">
                                 <p className="flex gap-2 items-center justify-center md:text-md font-bold text-primary lowercase tracking-wider">
-                                    {postedBy?.userName.replace(/\s+/g, "")} <GoVerified className="text-blue-400 text-md" />
+                                    {postedBy?.userName.replace(/\s+/g, "")}{" "}
+                                    <GoVerified className="text-blue-400 text-md" />
                                 </p>
                             </div>
                         </Link>
@@ -49,7 +50,6 @@ const HomeVersion = ({ post }: IProps) => {
                     />
                 </div>
             </div>
-            
         </div>
     );
 };

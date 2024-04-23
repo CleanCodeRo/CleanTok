@@ -4,7 +4,7 @@ import DefaultVersion from "./DefaultVersion";
 import HomeVersion from "./HomeVersion";
 
 interface IProps {
-    post: Video;
+    post: Video | null | undefined;
     isShowingOnHome?: boolean;
 }
 

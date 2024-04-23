@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import PlayPauseButton from "@/app/_components/VideoCard/PlayPauseButton";
-import MuteUnmuteVideoSwitcher from "@/app/_components/VideoCard/MuteUnmuteVideoSwitcher";
+import PlayPauseButton from "@/app/_components/PlayPauseButton/PlayPauseButton";
+import MuteUnmuteVideoSwitcher from "@/app/_components/MuteUnmuteVideoSwitcher/MuteUnmuteVideoSwitcher";
 
 interface IProps {
     videoClasses?: string;
