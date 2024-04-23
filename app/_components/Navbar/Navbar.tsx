@@ -10,8 +10,9 @@ import useAuthStore from "@/app/_store/authStore";
 import { IUser } from "@/app/_utils/interfaces";
 import { IoMdAdd } from "react-icons/io";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
-import { AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineLogout, AiOutlineSearch } from "react-icons/ai";
 import { createOrGetUser } from "@/app/_utils/api";
+import SearchBar from "../SearchBar/SearchBar";
 
 type Props = {};
 
@@ -31,7 +32,7 @@ const Navbar = (props: Props) => {
             </div>
 
             <div className="w-full flex flex-wrap items-center justify-between mx-auto p-4">
-                <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Link href="/" className="logo flex items-center space-x-3 rtl:space-x-reverse">
                     <Image
                         className="cursor-pointer w-[100px] md:w-[130px] h-8"
                         src={Logo}
@@ -40,24 +41,13 @@ const Navbar = (props: Props) => {
                     />
                 </Link>
 
-                <div
-                    className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-                    id="navbar-sticky"
-                >
-                    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
-                                aria-current="page"
-                            >
-                                Home
-                            </a>
-                        </li>
-                    </ul>
+                <div className="flex" id="navbar-search">
+                    <div className="relative hidden lg:block">
+                        <SearchBar />
+                    </div>
                 </div>
 
-                <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <div className="auth flex space-x-3 md:space-x-0 rtl:space-x-reverse">
                     {userProfile ? (
                         <div className="flex gap-5 md:gap-10">
                             <Link href="/upload">
