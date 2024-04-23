@@ -38,14 +38,8 @@ const PostDetails = (props: IProps) => {
         <Spinner />
     ) : (
         <div className="relative w-full h-full">
-            <div className="flex w-full h-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
+            <div className="flex w-full h-full bg-white flex-wrap lg:flex-nowrap">
                 <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
-                    <div className="opacity-90 absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
-                        <p className="cursor-pointer " onClick={() => router.back()}>
-                            <MdOutlineCancel className="text-white text-[35px] hover:opacity-90" />
-                        </p>
-                    </div>
-
                     <VideoWithControls
                         videoClasses={"cursor-pointer w-full h-full"}
                         videoRef={videoRef}
@@ -54,9 +48,9 @@ const PostDetails = (props: IProps) => {
                 </div>
 
                 <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
-                    <div className="lg:mt-20 mt-10">
+                    <div className="mt-4">
                         <Link href={`/user/${post?.postedBy?._id}`}>
-                            <div className="flex gap-4 mb-4 bg-white w-full pl-10 cursor-pointer">
+                            <div className="flex gap-4 mb-4 bg-white w-full pl-4 lg:pl-10 cursor-pointer">
                                 <div className="w-[42px] h-[42px]">
                                     <ProfilePicture profileImage={post?.postedBy?.profileImage} />
                                 </div>
@@ -68,7 +62,7 @@ const PostDetails = (props: IProps) => {
                             </div>
                         </Link>
 
-                        <div className="px-10">
+                        <div className="pl-20 pr-10 lg:px-10">
                             <p className=" text-md text-gray-600">{post?.caption}</p>
                         </div>
                     </div>
