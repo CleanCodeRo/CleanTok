@@ -5,6 +5,7 @@ import "../ui/styles/globals.scss";
 import Navbar from "../_components/Navbar/Navbar";
 import Sidebar from "../_components/Sidebar/Sidebar";
 import { googleClientId } from "../_utils/env";
+import Modal from "../_components/Modal/Modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ const RootLayout = ({
                         <Sidebar />
                         <div className="flex flex-col gap-10 videos flex-1 p-3 ml-0 xl:ml-[400px]">{children}</div>
                     </div>
+                    <Modal />
                 </GoogleOAuthProvider>
             </body>
         </html>
