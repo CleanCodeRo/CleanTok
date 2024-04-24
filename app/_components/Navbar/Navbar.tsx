@@ -8,9 +8,8 @@ import useGeneralStore from "@/app/_store/generalStore";
 import ShowHideMenuToggle from "../ShowHideMenuToggle/ShowHideMenuToggle";
 import useAuthStore from "@/app/_store/authStore";
 import { IUser } from "@/app/_utils/interfaces";
-import { IoMdAdd } from "react-icons/io";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
-import { AiOutlineLogout, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineLogout } from "react-icons/ai";
 import { createOrGetUser } from "@/app/_utils/api";
 import SearchBar from "../SearchBar/SearchBar";
 
@@ -50,12 +49,6 @@ const Navbar = (props: Props) => {
                 <div className="auth flex space-x-3 md:space-x-0 rtl:space-x-reverse">
                     {userProfile ? (
                         <div className="flex gap-5 md:gap-10">
-                            <Link href="/upload">
-                                <button className="border-2 px-2 md:px-4 text-md font-semibold flex items-center gap-2">
-                                    <IoMdAdd className="text-xl" /> <span className="hidden md:block">Upload </span>
-                                </button>
-                            </Link>
-
                             {user?.profileImage && (
                                 <Link href={`/user/${user?._id}`}>
                                     <div>
