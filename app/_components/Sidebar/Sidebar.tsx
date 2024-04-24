@@ -11,13 +11,13 @@ import useAuthStore from "@/app/_store/authStore";
 import { IoMdAdd } from "react-icons/io";
 
 const Sidebar = () => {
-    const { showSidebar } = useGeneralStore();
+    const { isSidebarOpen } = useGeneralStore();
     const { userProfile } = useAuthStore();
 
     return (
         <div
             className={`sidebar bg-white z-20 xl:z-0 ${
-                showSidebar ? "translate-x-0" : "-translate-x-20 xl:translate-x-0"
+                isSidebarOpen ? "translate-x-0" : "-translate-x-20 xl:translate-x-0"
             } h-full border-r-2 border-gray-100 absolute xl:fixed xl:static duration-100`}
         >
             <div className="content xl:w-400 w-20 flex flex-col justify-start mb-10 p-3 overflow-hidden">

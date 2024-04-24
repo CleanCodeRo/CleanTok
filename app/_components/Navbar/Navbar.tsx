@@ -16,7 +16,7 @@ import SearchBar from "../SearchBar/SearchBar";
 type Props = {};
 
 const Navbar = (props: Props) => {
-    const { showSidebar, toggleSidebarDisplay } = useGeneralStore();
+    const { isSidebarOpen, toggleSidebarDisplay } = useGeneralStore();
     const { userProfile, addUser, removeUser } = useAuthStore();
     const [user, setUser] = useState<IUser | null>();
 
@@ -27,7 +27,7 @@ const Navbar = (props: Props) => {
     return (
         <nav className="sticky bg-white w-full z-20 top-0 start-0 border-b border-gray-200 flex items-center gap-1 xl:gap-0">
             <div className="xl:hidden w-20 flex flex-wrap items-center justify-center">
-                <ShowHideMenuToggle handleDisplay={toggleSidebarDisplay} showMenu={showSidebar} />
+                <ShowHideMenuToggle handleDisplay={toggleSidebarDisplay} showMenu={isSidebarOpen} />
             </div>
 
             <div className="w-full flex flex-wrap items-center justify-between mx-auto p-4">

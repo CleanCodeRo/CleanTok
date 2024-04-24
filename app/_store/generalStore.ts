@@ -2,9 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const generalStore = (set: any) => ({
-    showSidebar: false,
-
-    toggleSidebarDisplay: () => set((state: any) => ({ showSidebar: !state.showSidebar })),
+    isSidebarOpen: false,
+    toggleSidebarDisplay: () => set((state: any) => ({ isSidebarOpen: !state.isSidebarOpen })),
 });
 
 const useGeneralStore = create(
