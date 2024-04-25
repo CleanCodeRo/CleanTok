@@ -7,11 +7,19 @@ export const CommentSchema = {
             name: 'postedBy',
             title: 'Posted By',
             type:'postedBy',
+            validation: (Rule: any) => Rule.required(),
         },
         {
-            name: 'comment',
-            title: 'Comment',
+            name: 'commentText',
+            title: 'Comment Text',
             type:'string',
+        },
+        {
+            name: 'parentPost',
+            title: "Parent Post",
+            type: 'reference',
+            to: [{type: 'post'}],
+            validation: (Rule: any) => Rule.required(),
         }
     ]
 }

@@ -14,16 +14,17 @@ export const allPostsQuery = () => {
           userName,
           profileImage
         },
-      likes,
-      comments[]{
-        comment,
-        _key,
-        postedBy->{
-        _id,
-        userName,
-        profileImage
-      },
-      }
+        "relatedComments": *[_type == "comment" && references(^._id)]{
+          _id,
+          _createdAt,
+          commentText,
+          postedBy->{
+            _id,
+            userName,
+            profileImage
+          }
+        },
+        likes
     }`;
 
     return query;
@@ -45,15 +46,18 @@ export const postDetailQuery = (postId: string | string[]) => {
         userName,
         profileImage
       },
-      likes,
-      comments[]{
-        comment,
-        _key,
+      "relatedComments": *[_type == "comment" && references(^._id)]{
+        _id,
+        _createdAt,
+        commentText,
         postedBy->{
           _id,
-          _ref,
-        },
-      }
+          userName,
+          profileImage
+        }
+      },
+      likes,
+      topic
     }`;
 
     return query;

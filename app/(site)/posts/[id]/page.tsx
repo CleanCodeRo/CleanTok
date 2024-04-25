@@ -65,6 +65,38 @@ const PostDetails = (props: IProps) => {
                         <div className="pl-20 pr-10 lg:px-10">
                             <p className=" text-md text-gray-600">{post?.caption}</p>
                         </div>
+
+                        {post?.relatedComments.length ? (
+                            <div className="post-comments w-full border-t mt-4 pt-4 pl-4 lg:pl-10 flex flex-col">
+                                {post?.relatedComments.map((comment) => (
+                                    <div key={comment._id} className="comment-card flex gap-4 mb-4 bg-white w-full">
+                                        <div className="left w-fit">
+                                            <Link href={`/user/${comment.postedBy?._id}`}>
+                                                <div className="w-[32px] h-[32px]">
+                                                    <ProfilePicture profileImage={comment.postedBy.profileImage} />
+                                                </div>
+                                            </Link>
+                                        </div>
+
+                                        <div className="right flex flex-col w-full">
+                                            <Link href={`/user/${comment.postedBy?._id}`}>
+                                                <div className="flex gap-2 items-center text-lg font-bold lowercase tracking-wider">
+                                                    {comment.postedBy.userName.replace(/\s+/g, "")}{" "}
+                                                    <GoVerified className="text-blue-400 text-lg" />
+                                                </div>
+                                            </Link>
+
+                                            <div className="comment-body">{comment.commentText}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="no-comments flex flex-col items-center border-t mt-4 pt-4">
+                                <div className="mb-1 xl:mb-2 text-xl xl:text-2xl font-bold">No comments yet.</div>
+                                <div className="mt-1 xl:mt-2 text-xs xl:text-sm">Start the conversation.</div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
