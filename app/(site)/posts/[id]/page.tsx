@@ -38,7 +38,7 @@ const PostDetails = (props: IProps) => {
         <Spinner />
     ) : (
         <div className="relative w-full h-full">
-            <div className="flex w-full h-full bg-white flex-wrap lg:flex-nowrap">
+            <div className="flex w-full h-full bg-white flex-wrap md:flex-nowrap gap-6 md:gap-8">
                 <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
                     <VideoWithControls
                         videoClasses={"cursor-pointer w-full h-full"}
@@ -48,9 +48,9 @@ const PostDetails = (props: IProps) => {
                 </div>
 
                 <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
-                    <div className="mt-4">
+                    <div className="md:mt-4">
                         <Link href={`/user/${post?.postedBy?._id}`}>
-                            <div className="flex gap-4 mb-4 bg-white w-full pl-4 lg:pl-10 cursor-pointer">
+                            <div className="flex gap-4 mb-4 bg-white w-full pl-4 lg:pl-4 cursor-pointer">
                                 <div className="w-[42px] h-[42px]">
                                     <ProfilePicture profileImage={post?.postedBy?.profileImage} />
                                 </div>
@@ -62,12 +62,12 @@ const PostDetails = (props: IProps) => {
                             </div>
                         </Link>
 
-                        <div className="pl-20 pr-10 lg:px-10">
+                        <div className="pl-16 md:pl-10 pr-10 md:pr-5">
                             <p className=" text-md text-gray-600">{post?.caption}</p>
                         </div>
 
                         {post?.relatedComments.length ? (
-                            <div className="post-comments w-full border-t mt-4 pt-4 pl-4 lg:pl-10 flex flex-col">
+                            <div className="post-comments w-full border-t mt-4 pt-4 pl-4 flex flex-col">
                                 {post?.relatedComments.map((comment) => (
                                     <div key={comment._id} className="comment-card flex gap-4 mb-4 bg-white w-full">
                                         <div className="left w-fit">
@@ -92,7 +92,7 @@ const PostDetails = (props: IProps) => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="no-comments flex flex-col items-center border-t mt-4 pt-4">
+                            <div className="no-comments flex flex-col items-center border-t mt-4 pt-4 pl-4 lg:pl-10">
                                 <div className="mb-1 xl:mb-2 text-xl xl:text-2xl font-bold">No comments yet.</div>
                                 <div className="mt-1 xl:mt-2 text-xs xl:text-sm">Start the conversation.</div>
                             </div>
