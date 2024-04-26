@@ -25,6 +25,7 @@ export interface Video {
 
 export interface IComment {
     _id: string;
+    _createdAt: string;
     postedBy: {
         _id: string;
         _ref: string;
