@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const SuggestedAccounts = () => {
-  return (
-    <div>SuggestedAccounts</div>
-  )
-}
+    return (
+        <>
+            <p className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">Suggested Accounts</p>
+        </>
+    );
+};
 
-export default SuggestedAccounts
+export default SuggestedAccounts;

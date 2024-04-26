@@ -21,14 +21,16 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div className="flex flex-col gap-10 videos h-full">
-            {isLoading ? (
-                <Spinner />
-            ) : videos?.length ? (
-                videos?.map((video: Video) => <VideoCard key={video._id} post={video} isShowingOnHome />)
-            ) : (
-                <NoResults text={`No Videos`} />
-            )}
+        <div className="flex flex-col items-center">
+            <div className="flex flex-col gap-10 videos max-w-[470px] h-full w-full break-all">
+                {isLoading ? (
+                    <Spinner />
+                ) : videos?.length ? (
+                    videos?.map((video: Video) => <VideoCard key={video._id} post={video} isShowingOnHome />)
+                ) : (
+                    <NoResults text={`No Videos`} />
+                )}
+            </div>
         </div>
     );
 };

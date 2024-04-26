@@ -23,11 +23,24 @@ export const fetchData = async <T,>(endpoint: string): Promise<T | any> => {
     }
 };
 
+
+// Posts
 export const getPosts = async () => {
     const apiString = `${apiBaseURL}/posts`;
     return fetchData(apiString);
 };
 
+export const getPost = async (id: string | string[]) => {
+    const apiString = `${apiBaseURL}/posts/${id}`;
+    return fetchData(apiString);
+};
+
+export const uploadPost = async (payload: any) => {
+    await axios.post(`${apiBaseURL}/posts`, payload);
+};
+
+
+// Users
 export const createOrGetUser = async (response: any, addUser: any) => {
     const decoded: { name: string; picture: string; sub: string } = jwtDecode(response.credential);
     const { name, picture, sub } = decoded;
@@ -44,6 +57,14 @@ export const createOrGetUser = async (response: any, addUser: any) => {
     await axios.post(`${apiBaseURL}/auth`, user);
 };
 
-export const uploadPost = async (payload: any) => {
-    await axios.post(`${apiBaseURL}/posts`, payload);
+
+// Comments
+export const getComment = async (id: string | string[]) => {
+    const apiString = `${apiBaseURL}/comments/${id}`;
+    return fetchData(apiString);
+};
+
+export const uploadComment = async (payload: any) => {
+    const response = await axios.post(`${apiBaseURL}/comments`, payload);
+    return response;
 };
