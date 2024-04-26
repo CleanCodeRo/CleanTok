@@ -25,6 +25,7 @@ export const PostSchema = {
             name: "postedBy",
             title: "PostedBy",
             type: "postedBy",
+            validation: (Rule: any) => Rule.required(),
         },
         {
             name: "likes",
@@ -34,19 +35,19 @@ export const PostSchema = {
                 {
                     type: "reference",
                     to: [{ type: "user" }],
-                }
+                },
             ],
         },
         {
             name: "comments",
             title: "Comments",
             type: "array",
-            of: [{ type: "comment" }],
+            of: [{ type: "reference", to: [{ type: "comment" }] }],
         },
         {
             name: "topic",
             title: "Topic",
             type: "string",
-        }
+        },
     ],
 };

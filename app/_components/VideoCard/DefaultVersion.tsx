@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import { BsPlay } from "react-icons/bs";
 import { Video } from "@/app/_utils/interfaces";
+import VideoWithControls from "../VideoWithControls/VideoWithControls";
 
 interface IProps {
-    post: Video;
+    post: Video | null | undefined;
 }
 
 const DefaultVersion = ({ post }: IProps) => {
-    const { caption, video, _id, likes } = post;
+    const { caption, video, _id, likes } = post!;
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     return (
         <div>
-            <Link href={`/detail/${_id}`}>
-                <video loop src={video.asset.url} className="w-[250px] md:w-full rounded-xl cursor-pointer"></video>
+            <Link href={`/posts/${_id}`}>
+                <div className="lg:ml-20 flex gap-4 justify-center">
+                    <div className="w-fit max-w-[470px] max-h-[585px] rounded-3xl">
+                        <VideoWithControls
+                            videoClasses={"cursor-pointer w-full h-full"}
+                            videoRef={videoRef}
+                            videoSource={video.asset.url}
+                        />
+                    </div>
+                </div>
             </Link>
 
             <div className="flex gap-2 -mt-8 items-center ml-4">
@@ -23,7 +33,7 @@ const DefaultVersion = ({ post }: IProps) => {
                 </p>
             </div>
 
-            <Link href={`/detail/${_id}`}>
+            <Link href={`/posts/${_id}`}>
                 <p className="mt-5 text-md text-gray-800 cursor-pointer w-210">{caption}</p>
             </Link>
         </div>
