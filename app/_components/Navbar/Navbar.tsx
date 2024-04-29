@@ -8,21 +8,28 @@ import useGeneralStore from "@/app/_store/generalStore";
 import ShowHideMenuToggle from "../ShowHideMenuToggle/ShowHideMenuToggle";
 import useAuthStore from "@/app/_store/authStore";
 import { IUser } from "@/app/_utils/interfaces";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { googleLogout } from "@react-oauth/google";
 import { AiOutlineLogout } from "react-icons/ai";
-import { createOrGetUser } from "@/app/_utils/api";
 import SearchBar from "../SearchBar/SearchBar";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
-    const { isSidebarOpen, toggleSidebarDisplay } = useGeneralStore();
-    const { userProfile, addUser, removeUser } = useAuthStore();
+    const router = useRouter();
+    const pathname = usePathname();
+    const { isSidebarOpen, toggleSidebarDisplay, setCloseHref } = useGeneralStore();
+    const { userProfile, removeUser } = useAuthStore();
     const [user, setUser] = useState<IUser | null>();
 
     useEffect(() => {
         setUser(userProfile);
     }, [userProfile]);
+
+    const handleLoginClick = () => {
+        setCloseHref(pathname);
+        router.push("/login");
+    };
 
     return (
         <nav className="sticky bg-white w-full z-20 top-0 start-0 border-b border-gray-200 flex items-center gap-1 xl:gap-0">
@@ -75,18 +82,18 @@ const Navbar = (props: Props) => {
                             </button>
                         </div>
                     ) : (
-                        <>
-                            <GoogleLogin
-                                onSuccess={(response) => createOrGetUser(response, addUser)}
-                                onError={() => console.log("Login Failed")}
-                            />
-                            <Link
-                                href="/"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-                            >
-                                Log in
-                            </Link>
-                        </>
+                        // <Link
+                        //     href="/login"
+                        //     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+                        // >
+                        //     Log in
+                        // </Link>
+                        <button
+                            onClick={handleLoginClick}
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+                        >
+                            Log in
+                        </button>
                     )}
                 </div>
             </div>
