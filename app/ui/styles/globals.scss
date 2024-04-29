@@ -12,6 +12,11 @@ body {
     box-sizing: border-box;
 }
 
+
+body:has(#default-modal) {
+    overflow: hidden !important;
+}
+
 * {
     box-sizing: border-box;
 }
