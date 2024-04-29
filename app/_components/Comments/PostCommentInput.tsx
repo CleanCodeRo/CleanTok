@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
+import { usePathname, useRouter } from "next/navigation";
 import { MdSend } from "react-icons/md";
+
 import useAuthStore from "@/app/_store/authStore";
 import { getComment, uploadComment } from "@/app/_utils/api";
 import { IComment, IUser } from "@/app/_utils/interfaces";
+import useGeneralStore from "@/app/_store/generalStore";
 
 type Props = {
-    postID: string | string[],
-    postRelatedComments: IComment[],
+    postID: string | string[];
+    postRelatedComments: IComment[];
     setPostRelatedComments: React.Dispatch<React.SetStateAction<IComment[]>>;
+    isTextAreaDisabled?: boolean;
 };
 
-const PostCommentInput = ({ postID, postRelatedComments, setPostRelatedComments }: Props) => {
+const PostCommentInput = ({ postID, postRelatedComments, setPostRelatedComments, isTextAreaDisabled }: Props) => {
+    const router = useRouter();
+    const pathname = usePathname();
     const { userProfile } = useAuthStore();
+    const { setCloseHref } = useGeneralStore();
     const [commentText, setCommentText] = useState<string>();
     const [user, setUser] = useState<IUser | null>();
 
@@ -23,29 +29,36 @@ const PostCommentInput = ({ postID, postRelatedComments, setPostRelatedComments 
     }, [userProfile]);
 
     const handleCommentUpload = async () => {
-        const newComment = {
-            _type: "comment",
-            commentText,
-            postedBy: {
-                _type: "postedBy",
-                _ref: user?._id,
-            },
-            parentPost: {
-                _ref: postID,
-                _type: "reference",
-            },
-        };
+        if (isTextAreaDisabled) {
+            setCloseHref(pathname);
+            router.push("/login");
+        } else {
+            if (commentText && commentText.length > 3) {
+                const newComment = {
+                    _type: "comment",
+                    commentText,
+                    postedBy: {
+                        _type: "postedBy",
+                        _ref: user?._id,
+                    },
+                    parentPost: {
+                        _ref: postID,
+                        _type: "reference",
+                    },
+                };
 
-        const newCommentResponse = await uploadComment(newComment);
-        const newCommentData = newCommentResponse.data;
+                const newCommentResponse = await uploadComment(newComment);
+                const newCommentData = newCommentResponse.data;
 
-        if (newCommentData && newCommentData._id) {
-            const createdComment = await getComment(newCommentData._id);
-            const commentData = createdComment.data[0];
+                if (newCommentData && newCommentData._id) {
+                    const createdComment = await getComment(newCommentData._id);
+                    const commentData = createdComment.data[0];
 
-            if (commentData && commentData._id) {
-                setPostRelatedComments([...postRelatedComments, commentData]);
-                setCommentText("");
+                    if (commentData && commentData._id) {
+                        setPostRelatedComments([...postRelatedComments, commentData]);
+                        setCommentText("");
+                    }
+                }
             }
         }
     };
@@ -78,6 +91,7 @@ const PostCommentInput = ({ postID, postRelatedComments, setPostRelatedComments 
                             placeholder="Add comment here..."
                             value={commentText}
                             onChange={(event) => setCommentText(event.target.value)}
+                            disabled={isTextAreaDisabled}
                         ></textarea>
 
                         <button
