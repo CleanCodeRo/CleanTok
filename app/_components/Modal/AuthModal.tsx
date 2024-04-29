@@ -42,14 +42,6 @@ const AuthModal = ({ isLogIn }: Props) => {
         }
     }, [router, userProfile]);
 
-    useEffect(() => {
-        const isGuestModeLocalStorage = window.localStorage.getItem("guest-mode-flag");
-
-        if (isGuestModeLocalStorage) {
-            console.log(isGuestModeLocalStorage);
-        }
-    }, []);
-
     return (
         isDisplayed && (
             <Modal>

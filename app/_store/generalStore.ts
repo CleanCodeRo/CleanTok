@@ -10,6 +10,8 @@ const generalStore = (set: any) => ({
     setModalContent: (content: React.ReactNode) => set(() => ({ modalContent: content })),
     isGuestMode: false,
     setGuestMode: () => set(() => ({ isGuestMode: true })),
+    closeHref: "/",
+    setCloseHref: (newHref: string) => set(() => ({ closeHref: newHref })),
 });
 
 const useGeneralStore = create(

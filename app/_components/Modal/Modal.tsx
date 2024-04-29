@@ -3,6 +3,7 @@
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import useGeneralStore from "@/app/_store/generalStore";
 
 type Props = {
     children: React.ReactNode;
@@ -10,9 +11,10 @@ type Props = {
 
 const Modal = ({ children }: Props) => {
     const router = useRouter();
+    const { closeHref } = useGeneralStore();
 
     const handleModalClose = () => {
-        router.back();
+        router.push(closeHref);
     };
 
     return (
