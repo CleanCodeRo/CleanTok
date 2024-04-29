@@ -18,12 +18,13 @@ type Props = {
 const AuthModal = ({ isLogIn }: Props) => {
     const router = useRouter();
     const { userProfile, addUser } = useAuthStore();
-    const { isGuestMode, setGuestMode } = useGeneralStore();
+    const { isGuestMode, setGuestMode, closeHref } = useGeneralStore();
     const [isDisplayed, setIsDisplayed] = useState(false);
 
     const handleGoogleLogin = useGoogleLogin({
         onSuccess: async (response) => {
             createOrGetUser(response, addUser);
+            router.push(closeHref);
         },
         onError: () => console.log("Login Failed"),
         flow: "implicit",
