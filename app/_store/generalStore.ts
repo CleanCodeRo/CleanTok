@@ -6,6 +6,12 @@ const generalStore = (set: any) => ({
     toggleSidebarDisplay: () => set((state: any) => ({ isSidebarOpen: !state.isSidebarOpen })),
     isModalOpen: false,
     toggleModalDisplay: () => set((state: any) => ({ isModalOpen: !state.isModalOpen })),
+    modalContent: null,
+    setModalContent: (content: React.ReactNode) => set(() => ({ modalContent: content })),
+    isGuestMode: false,
+    setGuestMode: () => set(() => ({ isGuestMode: true })),
+    closeHref: "/",
+    setCloseHref: (newHref: string) => set(() => ({ closeHref: newHref })),
 });
 
 const useGeneralStore = create(

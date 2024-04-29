@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+
 import "../ui/styles/globals.scss";
 import Navbar from "../_components/Navbar/Navbar";
 import Sidebar from "../_components/Sidebar/Sidebar";
 import { googleClientId } from "../_utils/env";
-import Modal from "../_components/Modal/Modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +15,10 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({
+    auth,
     children,
 }: Readonly<{
+    auth: React.ReactNode;
     children: React.ReactNode;
 }>) => {
     return (
@@ -28,7 +30,7 @@ const RootLayout = ({
                         <Sidebar />
                         <div className="flex flex-col gap-10 videos flex-1 p-3 ml-0 xl:ml-[400px]">{children}</div>
                     </div>
-                    <Modal />
+                    {auth}
                 </GoogleOAuthProvider>
             </body>
         </html>
