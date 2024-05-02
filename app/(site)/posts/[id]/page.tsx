@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, Suspense } from "react";
 import { useParams } from "next/navigation";
 
 import { IComment, Video } from "@/app/_utils/interfaces";
@@ -46,39 +46,47 @@ const PostDetails = (props: IProps) => {
 
     useEffect(() => {}, [postRelatedComments]);
 
-    return isLoading ? (
-        <Spinner />
-    ) : (
-        <div className="relative w-full h-full">
-            <div className="flex w-full h-full bg-white flex-wrap md:flex-nowrap gap-6 md:gap-8">
-                <div className="relative flex-2 w-full lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
-                    <VideoWithControls
-                        videoClasses={"cursor-pointer w-full h-full"}
-                        videoRef={videoRef}
-                        videoSource={post?.video?.asset.url}
-                    />
-                </div>
+    return (
+        <Suspense fallback={<Spinner />}>
+            {isLoading ? (
+                <Spinner />
+            ) : (
+                <div className="relative w-full h-full">
+                    <div className="flex w-full h-full bg-white flex-wrap md:flex-nowrap gap-6 md:gap-8">
+                        <div className="relative flex-2 w-full lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
+                            <VideoWithControls
+                                videoClasses={"cursor-pointer w-full h-full"}
+                                videoRef={videoRef}
+                                videoSource={post?.video?.asset.url}
+                            />
+                        </div>
 
-                <div className="relative w-full md:w-[900px] lg:w-[700px] md:pt-4 md:border-l">
-                    <PostAuthorProfileLink postDetails={post!} />
+                        <div className="relative w-full md:w-[900px] lg:w-[700px] md:pt-4 md:border-l">
+                            <PostAuthorProfileLink postDetails={post!} />
 
-                    <div className="pl-16 md:pl-10 pr-10 md:pr-5 break-all">
-                        <p className="text-md text-gray-600">{post?.caption}</p>
+                            <div className="pl-16 md:pl-10 pr-10 md:pr-5 break-all">
+                                <p className="text-md text-gray-600">{post?.caption}</p>
+                            </div>
+
+                            <div className="comments-section flex flex-col border-t mt-4 pt-4 pl-4 max-h-[420px] overflow-scroll">
+                                {postRelatedComments.length ? (
+                                    <PostComments comments={postRelatedComments} />
+                                ) : (
+                                    <NoComments />
+                                )}
+                            </div>
+
+                            <PostCommentInput
+                                postID={id}
+                                postRelatedComments={postRelatedComments}
+                                setPostRelatedComments={setPostRelatedComments}
+                                isTextAreaDisabled={isPostCommentInputDisabled}
+                            />
+                        </div>
                     </div>
-
-                    <div className="comments-section flex flex-col border-t mt-4 pt-4 pl-4 max-h-[420px] overflow-scroll">
-                        {postRelatedComments.length ? <PostComments comments={postRelatedComments} /> : <NoComments />}
-                    </div>
-
-                    <PostCommentInput
-                        postID={id}
-                        postRelatedComments={postRelatedComments}
-                        setPostRelatedComments={setPostRelatedComments}
-                        isTextAreaDisabled={isPostCommentInputDisabled}
-                    />
                 </div>
-            </div>
-        </div>
+            )}
+        </Suspense>
     );
 };
 
