@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getPosts } from "@/app/_utils/api";
 import { Video } from "../_utils/interfaces";
 import NoResults from "../_components/NoResults/NoResults";
@@ -23,13 +23,15 @@ const HomePage = () => {
     return (
         <div className="flex flex-col items-center">
             <div className="flex flex-col gap-10 videos max-w-[470px] h-full w-full break-all">
-                {isLoading ? (
-                    <Spinner />
-                ) : videos?.length ? (
-                    videos?.map((video: Video) => <VideoCard key={video._id} post={video} isShowingOnHome />)
-                ) : (
-                    <NoResults text={`No Videos`} />
-                )}
+                <Suspense fallback={<p>Loading posts...</p>}>
+                    {isLoading ? (
+                        <Spinner />
+                    ) : videos?.length ? (
+                        videos?.map((video: Video) => <VideoCard key={video._id} post={video} isShowingOnHome />)
+                    ) : (
+                        <NoResults text={`No Videos`} />
+                    )}
+                </Suspense>
             </div>
         </div>
     );
